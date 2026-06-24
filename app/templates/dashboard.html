@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - My Auto Prac{% endblock %}
+
+{% block content %}
+<div class="dashboard">
+    <h2>Welcome, {{ current_user.username }}!</h2>
+
+    <div class="stats-container">
+        <div class="stat-card">
+            <h3>{{ stats.total }}</h3>
+            <p>Total Tasks</p>
+        </div>
+        <div class="stat-card">
+            <h3>{{ stats.completed }}</h3>
+            <p>Completed</p>
+        </div>
+        <div class="stat-card">
+            <h3>{{ stats.pending }}</h3>
+            <p>Pending</p>
+        </div>
+        <div class="stat-card">
+            <h3>{{ stats.in_progress }}</h3>
+            <p>In Progress</p>
+        </div>
+    </div>
+
+    <div class="tasks-section">
+        <h3>Your Tasks</h3>
+
+        {% if tasks %}
+            <div class="task-filters">
+                <input type="text" id="searchInput" placeholder="Search tasks..." class="search-box">
+            </div>
+
+            <table class="task-table">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Status</th>
+                        <th>Priority</th>
+                        <th>Created</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for task in tasks %}
+                        <tr class="task-row">
+                            <td><strong>{{ task.title }}</strong></td>
+                            <td>
+                                <span class="badge badge-{{ task.status }}">{{ task.status }}</span>
+                            </td>
+                            <td>
+                                <span class="badge badge-{{ task.priority }}">{{ task.priority }}</span>
+                            </td>
+                            <td>{{ task.created_at.strftime('%Y-%m-%d') }}</td>
+                            <td>
+                                <a href="{{ url_for('task.edit_task', task_id=task.id) }}" class="btn-small">Edit</a>
+                                <form method="POST" action="{{ url_for('task.delete_task', task_id=task.id) }}" style="display:inline;">
+                                    <button type="submit" class="btn-small btn-danger" onclick="return confirm('Are you sure?');">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p class="no-tasks">No tasks yet. <a href="{{ url_for('task.new_task') }}">Create one!</a></p>
+        {% endif %}
+    </div>
+</div>
+
+<script>
+    document.getElementById('searchInput').addEventListener('keyup', function() {
+        const filter = this.value.toLowerCase();
+        const rows = document.querySelectorAll('.task-row');
+        rows.forEach(row => {
+            const title = row.querySelector('td').textContent.toLowerCase();
+            row.style.display = title.includes(filter) ? '' : 'none';
+        });
+    });
+</script>
+{% endblock %}
