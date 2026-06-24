@@ -1,3 +1,10 @@
+# Virtual Environment
+venv/
+env/
+ENV/
+.venv
+
+# Python
 __pycache__/
 *.py[cod]
 *$py.class
@@ -15,14 +22,12 @@ parts/
 sdist/
 var/
 wheels/
+pip-wheel-metadata/
+share/python-wheels/
 *.egg-info/
 .installed.cfg
 *.egg
-
-# Virtual Environment
-venv/
-ENV/
-env/
+MANIFEST
 
 # IDE
 .vscode/
@@ -30,19 +35,72 @@ env/
 *.swp
 *.swo
 *~
+.DS_Store
+.project
+.pydevproject
 
 # Database
 *.db
 *.sqlite
 *.sqlite3
+instance/
 
 # Environment
 .env
 .env.local
-
-# OS
-.DS_Store
-Thumbs.db
+.env.*.local
 
 # Logs
 *.log
+logs/
+*.pot
+
+# Testing
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+
+# Uploads/Temp
+uploads/
+tmp/
+temp/
+*.tmp
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE Specific
+.vscode/settings.json
+.idea/workspace.xml
+*.sublime-project
+*.sublime-workspace
+
+# Flask
+instance/
+.webassets-cache
+
+# Secrets & Credentials
+*.key
+*.pem
+secrets.json
+credentials.json
+
+# Node (if using npm packages)
+node_modules/
+npm-debug.log
+
+# Docker
+.dockerignore
+docker-compose.override.yml
